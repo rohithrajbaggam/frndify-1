@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{%load static%}
+{%block css_content%}
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+{%endblock%}
+{%block body_content%}
+<h2>User Post Detail</h2>
+{% if object.posted_user == user %}
+<a href="{%url 'user-post-update' object.pk%}" class="btn btn-outline-info">Update</a>
+<a href="{%url 'user-post-delete' object.pk%}" class="btn btn-outline-danger">Delete</a>
+{% endif %}
+<article class="media content-section"> 
+    {% if object.posted_user.page_profile %}
+  <img class="rounded-circle article-img" src="/media/{{object.post_page.page_profile}}" alt="">
+  
+  {% else %}
+  <img class="rounded-circle article-img" src="/media/group.png" alt="">
+
+  {% endif %}
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ object.posted_user }}</a>
+        <small class="text-muted">{{ object.created|timesince }} ago</small>
+      </div>
+      <h2><a class="article-title">{{ object.title }}</a></h2>
+      {% if object.img %}
+      <img src="/media/{{object.img}}" style="height: 400px; width: 50%;">
+      {% endif %}
+      <p class="article-content">{{ object.content }}</p>
+    </div>
+    <hr>
+    {% if user.is_authenticated %}
+    {% if object.pk in user_save_post_list %}
+    <a href="{% url 'user-unsave' object.id %}" class="btn btn-danger">unsave</a>
+    {% else %}
+    <a href="{% url 'user-save' object.id %}" class="btn btn-outline-info">save</a>
+    {% endif %}
+    {% endif %}
+  </article>
+
+{%endblock %}

@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+{% load crispy_forms_tags %}
+{%load static%}
+{% block css_content %}
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+    {% endblock %}
+{% block body_content %}
+
+    <div class="row">
+        <div class="col-sm-4">
+
+            <img src="{{user_other.user_profile.profile_pic.url}}" height="100px" width="100px" alt="" class="rounded mx-auto d">
+
+
+        </div>
+        <div class="col-sm-8"> 
+
+            <h3>{{user_other.username}} &nbsp;
+                {% if user.is_authenticated %}
+                {% if not already_followed %}
+                <a href="{% url 'follow' username=user_other.username %}" class="btn btn-outline-info">Follow</a>
+                {% else %}
+                <a href="{% url 'unfollow' username=user_other.username %}" class="btn btn-outline-danger">Unfollow</a>
+                {% endif %}
+                {% endif %}
+            </h3> 
+            <h4>{{user_other.follower.count}} Following &nbsp;&nbsp; {{user_other.following.count}} Followers</h4>
+            
+            <br>
+            <h3>{{ user_other.user_profile.full_name}}</h3>
+            <h6>{{ user_other.user_profile.bio}}</h6>
+        </div>
+    </div>
+    <br> <br>
+    <div class="row">
+      {% include 'pages/components/page_post_compo.html' %}
+      {% include 'pages/components/user_post_compo.html' %}
+    </div>
+{% endblock %}

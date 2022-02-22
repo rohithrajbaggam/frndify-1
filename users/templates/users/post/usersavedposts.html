@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%load static %}
+{% block css_content %} 
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+{% endblock %}
+{%block body_content%}
+<h1>User Like Post List</h1>
+{% for save in user_save_posts %}
+<article class="media content-section">
+    {% if save.post.post_page.page_profile %}
+  <img class="rounded-circle article-img" src="/media/{{save.post.post_page.page_profile}}" alt="">
+  
+  {% else %}
+  <img class="rounded-circle article-img" src="/media/group.png" alt="">
+
+  {% endif %}
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ save.post.post_page }}</a>
+        <small class="text-muted">{{ save.post.created|timesince }} ago</small>
+      </div>
+      <h2><a class="article-title" href="{%url 'post-detail' save.post.id%}">{{ save.post.title }}</a></h2>
+      {% if save.post.img %}
+      <img src="/media/{{save.post.img}}" style="height: 400px; width: 50%;">
+      {% endif %}
+      <p class="article-content">{{ save.post.content }}</p>
+    </div>
+    <hr>
+    {% if save.post.pk in user_save_post_list %}
+    <a href="{% url 'user-unsave' save.post.id %}" class="btn btn-danger">unsave</a>
+    {% else %}
+    <a href="{% url 'user-save' save.post.id %}" class="btn btn-outline-info">save</a>
+    {% endif %}
+    
+  </article>
+{% endfor %}
+
+<small>{{save_posts.user}}</small>
+{% include 'pages/components/page_post_compo.html' %}
+{%endblock%}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block css_content %}
+    <style>
+        .sign_up { 
+            width : 550px;
+            border : 1px solid #ccc;
+            padding : 40px;
+        }
+        .login { 
+            width : 550px;
+            border : 1px solid #ccc;
+            padding : 40px;
+        }
+    </style>
+{% endblock %}
+{% block body_content %}
+
+<center>
+<div class="sign_up"> 
+    <h3>Delete Post</h3>
+    <br> 
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Are you sure you want to delete the Post "{{object.title}}"</h2>
+        <br> <br>
+        <button type="submit"  class="btn btn-outline-danger">Delete</button>
+        <a href="{%url 'post-delete' object.id%}" class="btn btn-outline-primary">Cancel</a>
+    </form>
+    <hr>
+    <h1>Back to Home Page ?<a href="{%url 'home'%}">Home</a></h1>
+</div>
+</center>
+
+{% endblock %}

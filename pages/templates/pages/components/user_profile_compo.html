@@ -1,0 +1,40 @@
+{% for data in user_profile_data %}
+
+{% if data.full_name %}
+<article class="media content-section">
+  <a href="">
+    {% if data.posted_user.user_profile.profile_pic %}
+  <img class="rounded-circle article-img" src="/media/{{data.posted_user.user_profile.profile_pic}}" alt="">
+  
+  {% else %}
+  <img class="rounded-circle article-img" src="/media/profile_default.jpeg" alt="">
+
+  {% endif %}
+  </a>
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="">{{ data.user }}</a>
+        <small class="text-muted">{{ data.Branch }}</small>
+      </div>
+      <p>{{ data.full_name }}</p>
+      <p>{{data.Branch}} ,{{ data.Section }}</p>
+      <p>{{ data.Hosteler_or_DayScholar }}, {{data.Hostel_Room_No}}</p>
+      <p>{{ data.bio }}</p>
+      <p>{{ data.Native_Language }}</p>
+      <p>{{ data.Languages_Known }}</p>
+      <p>{{ data.Address }}</p>
+      <p>{{ data.State }}, {{data.Country}}</p>
+      <hr>
+      <small>Social Media</small>
+      <a href="https://wa.me/{{page.whatsapp}}">whatsapp</a>
+      <a href="https://instagram.com/{{page.instagram_username}}">Insta</a>
+      <a href="{{page.linkdin_profile_link}}">linkdin</a>
+      <a href="mailto:{{page.gmail}}">email</a>
+      <a href="{{page.facebook}}">fb</a>
+    </div>
+  </a>
+    <hr>
+  
+  </article>
+  {% endif %}
+{% endfor %}

@@ -1,0 +1,28 @@
+{% for page in pages %}
+<article class="media content-section">
+  {% if page.page_profile %}
+  <a href="{%url 'page-profile' page.id page.page_title%}">
+  <img class="rounded-circle article-img" src="{{page.page_profile.url}}" alt="">
+</a>
+  {% endif %}
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{%url 'user-other' username=page.posted_user.username %}">{{ page.posted_user }}</a>
+        <small class="text-muted">{{ page.created|timesince }} ago</small>
+        <a href="{%url 'page-profile' page.id page.page_title%}">page profile</a>
+      </div>
+      <h2><a class="article-title" href="{% url 'page-detail' page.id %}">{{ page.page_title }}</a></h2>
+      <p class="article-content">{{ page.about }}</p>
+      <p class="article-content">{{ page.field }}</p>
+      <p class="article-content">{{ page.description }}</p>
+      <p class="article-content">{{ page.your_role }}</p>
+      <p class="article-content">{{ page.website }}</p>
+      <small>Social Media</small>
+      <a href="https://wa.me/{{page.whatsapp}}">whatsapp</a>
+      <a href="https://instagram.com/{{page.instagram}}">Insta</a>
+      <a href="{{page.linkdin_profile_link}}">linkdin</a>
+      <a href="mailto:{{page.email}}">email</a>
+      <a href="{{page.facebook}}">fb</a>
+    </div>
+  </article>
+{% endfor %}
