@@ -16,6 +16,7 @@ pending -> username, Email, Password CRUD -> done
 
 save follow
 
+requirement.txt file is uploaded 
 
 API and Front end is pending 
 
