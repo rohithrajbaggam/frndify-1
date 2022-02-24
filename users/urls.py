@@ -12,7 +12,7 @@ urlpatterns = [
     path('edit-profile/', views.edit_profile, name='edit-profile'),
     path('profile/<username>/', views.user_other, name='user-other'),
     path('user_profile_change/', views.user_profile_change, name='user_profile_change'),
-    path('password/', views.pass_change, name='pass_change'),
+    path('password/', views.pass_change, name='pass_change'), 
 
     # path('user/posts/', UserPostListView.as_view(template_name='users/post/post_list.html'), name='user-post-list'),
     path('user/posts/', views.userpostlistview, name='user-post-list'),

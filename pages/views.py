@@ -161,7 +161,7 @@ def PostCreateView(request, pk):
                 post.post_author = request.user
                 post.post_page = page_rel
                 post.save()
-                return redirect('home')
+                return redirect('home') 
         
     context = {
         'form':form,
@@ -205,7 +205,7 @@ def postdetailview(request, pk):
             'object' : posts,
             'save_post' :save_post,
             'save_post_list' : save_post_list,
-        }
+        } 
     else:
         context = {
         'object' : posts, 
@@ -277,6 +277,35 @@ def userprofilelist(request):
         'user_profile_data' : user_profile_data,
     }
     return render(request, 'pages/lists/userprofilelist.html', context)
+
+
+def userprofiledatadetail(request, pk):
+    user_profile_data = UserProfile.objects.get(id=pk)
+    context = {
+        'data' : user_profile_data,
+    }
+    return render(request, 'pages/lists/userprofiledetail.html', context)
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def help(request):
+    return render(request, 'help.html')
+
+
+def mobnav(request):
+    return render(request, 'mobnav.html')
+
+
+def mobsug(request):
+    return render(request, 'mobsug.html')
+
+
+def apilistview(request):
+    return render(request, 'apilist.html')
+
 
 # @login_required(login_url='login')
 # def edit_profile(request):

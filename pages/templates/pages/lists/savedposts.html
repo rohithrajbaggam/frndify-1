@@ -1,41 +1,58 @@
 {% extends 'base.html' %}
-{%load static %}
-{% block css_content %} 
-<link rel="stylesheet" href="{%static 'styles/post.css'%}">
-{% endblock %}
-{%block body_content%}
-<h1>Like Post List</h1>
-{% for save in save_posts %}
-<article class="media content-section">
-    {% if save.post.post_page.page_profile %}
-  <img class="rounded-circle article-img" src="/media/{{save.post.post_page.page_profile}}" alt="">
-  
-  {% else %}
-  <img class="rounded-circle article-img" src="/media/group.png" alt="">
 
-  {% endif %}
-    <div class="media-body">
-      <div class="article-metadata">
-        <a class="mr-2" href="#">{{ save.post.post_page }}</a>
-        <small class="text-muted">{{ save.post.created|timesince }} ago</small>
-      </div>
-      <h2><a class="article-title" href="{%url 'post-detail' save.post.id%}">{{ save.post.title }}</a></h2>
-      {% if save.post.img %}
-      <img src="/media/{{save.post.img}}" style="height: 400px; width: 50%;">
-      {% endif %}
-      <p class="article-content">{{ save.post.content }}</p>
+    <!-- -------------------------- -->
+{%load static%}
+{% block body_content %}
+
+  <div class="feeds">
+    <!-- -------------------------- Feed 1-------------------------- -->
+
+    {% for save in save_posts %}
+    <div class="feed" style="background-color: rgb(23, 2, 48); "> 
+        <div class="head">
+            <div class="user">
+              <a href="{%url 'page-profile' save.post.post_page.id save.post.post_page.page_title%}">
+                <div class="profile-photo"> 
+                 
+                    <img src="/media/{{save.post.post_page.page_profile}}">
+                </div>  <h3 >{{ save.post.post_page }}</h3> <br>
+                <div class="ingo" style="float: right;">
+                    <small >{{ save.post.created|timesince }} ago</small></a>
+                </div>
+            </div>
+            <span class="edit">
+               <i class="uil uil-ellipsis-h"></i>
+            </span>
+        </div>
+        <h2 > <a href="{%url 'post-detail' save.post.id%}" style="color:aliceblue;"> {{ save.post.title }}</a></h2>
+        {% if save.post.img %}
+        <div class="photo">
+            <img src="/media/{{save.post.img}}">
+        </div>
+        {% endif %}
+
+        <div class="action-buttons">
+            <div class="interaction-buttons">
+                <span><i class="uil uil-heart"></i></span>
+                <span><i class="uil uil-comment-dots"></i></span>
+                <span><i class="uil uil-share-alt"></i></span>
+            </div>
+            <div class="caption">
+              <p > <a href="{%url 'post-detail' save.post.id%}" style="color:aliceblue;"> {{ save.post.content }}</a></p>
+          </div>
+            <div class="bookmark">
+              {% if user.is_authenticated %}
+              {% if save.post.pk in save_post_list %}
+              <a href="{%url 'unsave' save.post.pk%}" class="btn btn-danger"><img src="{%static 'logo/unbookmark.png'%}" alt="" style="height: 20px; width: 20px;"></a>
+              {% else %}
+              <a href="{% url 'save' save.post.pk %}" class="btn btn-outline-info"><img src="{%static 'logo/bookmark.png'%}" alt="" style="height: 20px; width: 20px;"></a>
+              {% endif %}
+              {% endif %}
+            </div>
+        </div>   
     </div>
-    <hr>
-    {% if user.is_authenticated %}
-    {% if save.post.pk in save_post_list %}
-    <a href="{%url 'unsave' save.post.pk%}" class="btn btn-danger">unsave</a>
-    {% else %}
-    <a href="{% url 'save' save.post.pk %}" class="btn btn-outline-info">save</a>
-    {% endif %}
-    {% endif %}
-  </article>
-{% endfor %}
+    <br><br>
+    {% endfor %}
+  </div>
 
-<small>{{save_posts.user}}</small>
-{% include 'pages/components/page_post_compo.html' %}
-{%endblock%}
+{% endblock %}

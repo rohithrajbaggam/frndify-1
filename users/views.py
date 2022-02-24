@@ -7,7 +7,7 @@ from .forms import CreateNewUser, EditProfile, UserProfileChange
 from .models import UserProfile, Follow, UserPost, UserSavePost
 from pages.models import Page, Post, SavePost
 from django.contrib.auth.forms import  PasswordChangeForm
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView 
+from django.views.generic import  ListView, CreateView, UpdateView, DeleteView 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 
@@ -166,15 +166,21 @@ class UserPostListView(ListView):
     ordering = ['-updated']
 
 
+
 def userpostlistview(request):
     userposts = UserPost.objects.all()
-    user_save_post = UserSavePost.objects.filter(user=request.user) 
-    user_save_post_list = user_save_post.values_list('post', flat=True)
-    context = {
-        'userposts' : userposts,
-        'user_save_post' : user_save_post,
-        'user_save_post_list' : user_save_post_list,
-    }
+    if request.user.is_authenticated:
+        user_save_post = UserSavePost.objects.filter(user=request.user) 
+        user_save_post_list = user_save_post.values_list('post', flat=True)
+        context = {
+            'userposts' : userposts,
+            'user_save_post' : user_save_post,
+            'user_save_post_list' : user_save_post_list,
+        }
+    else:
+        context = {
+            'userposts' : userposts,
+        }
     return render(request, 'users/post/post_list.html', context)
 
 
@@ -183,9 +189,19 @@ def userpostlistview(request):
 
 def userpostdetailview(request, pk):
     posts = UserPost.objects.get(id=pk)
-    context = {
-        'object' : posts, 
-    }
+    if request.user.is_authenticated:
+        user_save_post = UserSavePost.objects.filter(user=request.user) 
+        user_save_post_list = user_save_post.values_list('post', flat=True)
+        context = {
+            'object' : posts,
+            'user_save_post' : user_save_post,
+            'user_save_post_list' : user_save_post_list,   
+        }
+    else:
+            context = {
+            'object' : posts,
+            
+        }
     return render(request, 'users/post/post_detail.html', context)
 
 

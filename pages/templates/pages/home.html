@@ -4,13 +4,11 @@
 <link rel="stylesheet" href="{%static 'styles/post.css'%}">
 {% endblock %}
 
+{%block body_content%} 
 
-{%block body_content%}
-<h1>Home Page</h1>
-
-{% include 'pages/components/page_compo.html' %}
 {% include 'pages/components/page_post_compo.html' %}
 {% if user.is_authenticated %}
 {% include 'pages/components/user_post_compo.html' %}
 {% endif %}
-{%endblock%}
+
+{% endblock %}

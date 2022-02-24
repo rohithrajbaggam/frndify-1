@@ -6,7 +6,6 @@
 
 
 {%block body_content%}
-<h1>Page Detail View</h1>
 {% if object.posted_user == user %}
 <a href="{%url 'page-update' object.id%}" class="btn btn-outline-info">Update</a>
 <a href="{%url 'page-delete' object.id%}" class="btn btn-outline-danger">Delete</a>
@@ -14,7 +13,7 @@
 {% endif %}
 <article class="media content-section">
   {% if object.page_profile %}
-  <img class="rounded-circle article-img" src="{{object.page_profile.url}}" alt="">
+  <img class="rounded-circle article-img" src="{{object.page_profile.url}}" alt="" style="border-radius: 10rem; height: 50px; width: 50px;">
   {% endif %}
     <div class="media-body">
       <div class="article-metadata">
